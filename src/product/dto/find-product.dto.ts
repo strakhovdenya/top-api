@@ -1,4 +1,4 @@
 export class FindProductDto {
-    catrgory: string;
-    limit: number;
+  catrgory: string;
+  limit: number;
 }
