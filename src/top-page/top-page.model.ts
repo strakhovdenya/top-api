@@ -5,7 +5,7 @@ export enum TopLevelCategory {
   Products,
 }
 
-export class TopPageMpdel {
+export class TopPageModel {
   firstCategory: TopLevelCategory;
   secondCategory: string;
   title: string;
