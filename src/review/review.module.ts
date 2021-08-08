@@ -12,10 +12,10 @@ import { ReviewService } from './review.service';
         typegooseClass: ReviewModel,
         schemaOptions: {
           collection: 'Review',
-        }
-      }
-    ])
+        },
+      },
+    ]),
   ],
   providers: [ReviewService],
 })
-export class ReviewModule { }
+export class ReviewModule {}

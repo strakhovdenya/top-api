@@ -10,10 +10,10 @@ import { AuthModel } from './auth.model';
       {
         typegooseClass: AuthModel,
         schemaOptions: {
-          collection: 'Auth'
-        }
-      }
-    ])
-  ]
+          collection: 'Auth',
+        },
+      },
+    ]),
+  ],
 })
-export class AuthModule { }
+export class AuthModule {}

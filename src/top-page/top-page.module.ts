@@ -11,9 +11,9 @@ import { TopPageModel } from './top-page.model';
         typegooseClass: TopPageModel,
         schemaOptions: {
           collection: 'TopPage',
-        }
-      }
-    ])
-  ]
+        },
+      },
+    ]),
+  ],
 })
 export class TopPageModule {}
