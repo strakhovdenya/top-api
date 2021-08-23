@@ -2,6 +2,6 @@ export class CreateReviewDto {
   name: string;
   title: string;
   description: string;
-  raiting: number;
+  rating: number;
   productId: string;
 }
