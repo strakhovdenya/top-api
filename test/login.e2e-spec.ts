@@ -23,7 +23,7 @@ describe('AuthController (e2e)', () => {
     app = moduleFixture.createNestApplication();
     await app.init();
   });
-/////
+////////
   it('/auth/login (POST) - success', async () => {
     return request(app.getHttpServer())
       .post('/auth/login')
