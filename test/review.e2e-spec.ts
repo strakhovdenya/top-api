@@ -5,6 +5,7 @@ import { AppModule } from './../src/app.module';
 import { CreateReviewDto } from '../dist/review/dto/create-review.dto';
 import * as db from 'mongoose';
 import { REVIEW_NOT_FOUND } from '../src/review/review.constants';
+import { AuthDto } from '../src/auth/dto/auth.dto';
 
 const productId = new db.Types.ObjectId().toHexString();
 
@@ -15,10 +16,16 @@ const testDto: CreateReviewDto = {
   rating: 5,
   productId,
 };
+
+const loginDto: AuthDto = {
+  login: 'den2@gmail.com',
+  password: '123',
+};
 jest.setTimeout(25000);
 describe('ReviewController (e2e)', () => {
   let app: INestApplication;
   let createdId: string;
+  let token: string;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -27,9 +34,15 @@ describe('ReviewController (e2e)', () => {
 
     app = moduleFixture.createNestApplication();
     await app.init();
+
+    const { body } = await request(app.getHttpServer())
+      .post('/auth/login')
+      .send(loginDto);
+
+    token = body.accessToken;
   });
 
-  it('/review/create (POST)', async () => {
+  it('/review/create (POST) - success', async () => {
     return request(app.getHttpServer())
       .post('/review/create')
       .send(testDto)
@@ -38,6 +51,13 @@ describe('ReviewController (e2e)', () => {
         createdId = body._id;
         expect(createdId).toBeDefined();
       });
+  });
+
+  it('/review/create (POST) - fail', async () => {
+    return request(app.getHttpServer())
+      .post('/review/create')
+      .send({ ...testDto, rating: 0 })
+      .expect(400);
   });
 
   it('/review/byProduct/:productId (GET- success)', async () => {
@@ -61,12 +81,14 @@ describe('ReviewController (e2e)', () => {
   it('/review/:id (DELETE - success)', async () => {
     return request(app.getHttpServer())
       .delete('/review/' + createdId)
+      .set('Authorization', 'Bearer ' + token)
       .expect(200);
   });
 
   it('/review/:id (DELETE - fail)', async () => {
     return request(app.getHttpServer())
       .delete('/review/' + db.Types.ObjectId().toHexString())
+      .set('Authorization', 'Bearer ' + token)
       .expect(404, {
         statusCode: 404,
         message: REVIEW_NOT_FOUND,

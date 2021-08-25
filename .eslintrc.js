@@ -25,6 +25,7 @@ module.exports = {
       {
         "allowSingleExtends": true
       }
-    ]
+    ],
+    'max-len': [1, { code: 120 }]
   },
 };
