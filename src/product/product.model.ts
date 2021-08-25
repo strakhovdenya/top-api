@@ -8,7 +8,9 @@ class ProductCharacteristic {
   @prop()
   value: string;
 }
-export interface ProductModel extends Base {}
+
+export interface ProductModel extends Base {
+}
 
 export class ProductModel extends TimeStamps {
   @prop()
@@ -21,12 +23,10 @@ export class ProductModel extends TimeStamps {
   price: number;
 
   @prop()
-  oldPrice: number;
-  @prop()
-  credit: number;
+  oldPrice?: number;
 
   @prop()
-  calculatedRating: number;
+  credit: number;
 
   @prop()
   description: string;
