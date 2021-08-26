@@ -10,18 +10,24 @@ export class TopPageService {
   constructor(
     @InjectModel(TopPageModel)
     private readonly topPageModel: ModelType<TopPageModel>,
-  ) {}
+  ) {
+  }
 
   findByFirstCategory(dto: FindTopPageDto) {
     return this.topPageModel
-      .find(
-        { firstCategory: dto.firstCategory },
+      .aggregate([
         {
-          alias: 1,
-          secondCategory: 1,
-          title: 1,
+          $match: {
+            firstCategory: dto.firstCategory,
+          },
         },
-      )
+        {
+          $group: {
+            _id: { secondCategory: '$secondCategory' },
+            pages: { $push: { alias: '$alias', title: '$title' } },
+          },
+        },
+      ])
       .exec();
   }
 
@@ -31,6 +37,17 @@ export class TopPageService {
 
   findByAlias(alias: string) {
     return this.topPageModel.findOne({ alias }).exec();
+  }
+
+  findByText(text: string) {
+    return this.topPageModel
+      .find({
+        $text: {
+          $search: text,
+          $caseSensitive: false,
+        },
+      })
+      .exec();
   }
 
   deleteById(id: string) {
