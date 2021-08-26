@@ -48,8 +48,17 @@ export class ProductService {
         {
           $lookup: {
             from: 'Review',
-            localField: '_id',
-            foreignField: 'productId',
+            let: {
+              productId2: '$_id',
+            },
+            pipeline: [
+              {
+                $match: { $expr: { $eq: ['$productId', '$$productId2'] } },
+              },
+              {
+                $sort: { createdAt: -1 },
+              },
+            ],
             as: 'reviews',
           },
         },
@@ -58,6 +67,9 @@ export class ProductService {
             reviewCount: { $size: '$reviews' },
             reviewAvg: { $avg: '$reviews.rating' },
           },
+        },
+        {
+          $sort: { 'reviews.createdAt': -1 },
         },
       ])
       .exec() as (ProductModel & {
