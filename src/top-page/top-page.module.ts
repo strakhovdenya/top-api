@@ -17,5 +17,7 @@ import { TopPageService } from './top-page.service';
     ]),
   ],
   providers: [TopPageService],
+  exports: [TopPageService],
 })
-export class TopPageModule {}
+export class TopPageModule {
+}

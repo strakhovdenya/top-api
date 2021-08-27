@@ -50,6 +50,10 @@ export class TopPageService {
       .exec();
   }
 
+  findAll() {
+    return this.topPageModel.find({}).exec();
+  }
+
   deleteById(id: string) {
     return this.topPageModel.findByIdAndRemove(id).exec();
   }
