@@ -1,5 +1,5 @@
 import {
-  IsArray,
+  IsArray, IsDate,
   IsEnum,
   IsNumber,
   IsObject,
@@ -22,6 +22,9 @@ class HhDataDto {
 
   @IsNumber()
   seniorSalary: number;
+
+  @IsDate()
+  updatedAt: Date;
 }
 
 class TopPageAdvantageDto {

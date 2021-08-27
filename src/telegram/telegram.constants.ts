@@ -1,0 +1,1 @@
+export const TELEGRAM_MODULE_OPTIONS = 'telegram_module_options';
