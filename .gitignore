@@ -3,6 +3,7 @@
 /node_modules
 .env
 /.clinic
+/uploads
 # Logs
 logs
 *.log

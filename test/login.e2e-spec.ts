@@ -11,7 +11,7 @@ const loginDto: AuthDto = {
   login: 'den2@gmail.com',
   password: '123',
 };
-jest.setTimeout(25000);
+jest.setTimeout(30000);
 describe('AuthController (e2e)', () => {
   let app: INestApplication;
 
